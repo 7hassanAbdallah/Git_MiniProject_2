@@ -1,0 +1,34 @@
+/*
+ * stop_watch.c
+ *
+ *  Created on: Apr 10, 2023
+ *      Author: Hassan
+ */
+#include <avr/io.h>
+#include <util/delay.h>
+
+unsigned char i[7]={0,5,4,6};
+
+void Display_7segmant(unsigned char x,unsigned char y);
+
+int main(){
+	DDRC|=0x0f;
+	DDRA = 0x3f;
+	DDRD &=~ (0x0c);
+
+	for(;;){
+		if (i[0]>5){i[0]=1;}
+	else i[0]++;
+			Display_7segmant(i[0],i[i[0]]);
+			_delay_ms(2);
+	}
+}
+
+
+
+void Display_7segmant(unsigned char x,unsigned char y){
+PORTA &=~ (0x3f);
+PORTA |= (1<<(x-1));
+PORTC = y;
+
+}
